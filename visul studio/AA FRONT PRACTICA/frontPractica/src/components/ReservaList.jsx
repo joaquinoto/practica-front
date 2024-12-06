@@ -9,10 +9,8 @@ const ReservaList = () => {
   const reservaStatus = useSelector((state) => state.reserva.status);
 
   useEffect(() => {
-    if (reservaStatus === 'idle') {
-      dispatch(fetchReservas());
-    }
-  }, [reservaStatus, dispatch]);
+    dispatch(fetchReservas());
+  }, [dispatch]);
 
   return (
     <div>

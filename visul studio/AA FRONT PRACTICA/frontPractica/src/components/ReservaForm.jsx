@@ -10,6 +10,7 @@ const ReservaForm = () => {
   const [fechaReserva, setFechaReserva] = useState('');
   const [turno, setTurno] = useState('Tarde');
   const [error, setError] = useState('');
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const dispatch = useDispatch();
   const users = useSelector((state) => state.user.users);
 
@@ -20,7 +21,11 @@ const ReservaForm = () => {
       setError('Usuario no encontrado');
       return;
     }
-    dispatch(addReserva({ nombre, apellido, numeroEd, fechaReserva, turno }));
+    dispatch(addReserva({ nombre, apellido, numeroEd, fechaReserva, turno }))
+      .then(() => {
+        setShowConfirmation(true);
+        setTimeout(() => setShowConfirmation(false), 2000); // Ocultar el mensaje después de 2 segundos
+      });
     setError('');
   };
 
@@ -35,6 +40,7 @@ const ReservaForm = () => {
         <option value="Noche">Noche</option>
       </select>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      {showConfirmation && <p className="confirmation-message">✔ Reserva agregada</p>}
       <button type="submit">Reservar</button>
     </form>
   );
